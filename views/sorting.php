@@ -71,15 +71,29 @@
 				);
 			}
 
+            $categories = get_the_category($post->ID);
+			$category_info = array();
+			if ($categories) {
+				foreach ($categories as $category) {
+					$category_info[] = array(
+						"id" => $category->term_id,
+						"name" => $category->name,
+						"slug" => $category->slug,
+						"description" => $category->description,
+					);
+				}
+			}
+
             $post_data = array(
                 "id" => $post->ID,
                 "status" => $post->post_status,
                 "title" => $post->post_title,
                 "slug" => $post->post_name,
                 "views" => (int)$views,
-                "author" => $author_info,
                 "date" => $post->post_date,
                 "modified" => $post->post_modified,
+                "author" => $author_info,
+                "categories" => $category_info,
                 "acf" => $acf,
                 "content" => $content,
             );
