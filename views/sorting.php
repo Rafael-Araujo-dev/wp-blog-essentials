@@ -58,6 +58,9 @@
         foreach ($posts as $post) {
             $views = get_post_meta($post->ID, "_custom_views", true);
             $acf = get_fields($post->ID);
+
+            $post_content = $post->post_content;
+			$content = array("rendered" => $post_content);
 			
 			$author = get_userdata($post->post_author);
 			$author_info = array();
@@ -67,7 +70,6 @@
 					"name"=> $author->nickname,
 				);
 			}
-			
 
             $post_data = array(
                 "id" => $post->ID,
@@ -79,7 +81,7 @@
                 "date" => $post->post_date,
                 "modified" => $post->post_modified,
                 "acf" => $acf,
-                "content" => $post->post_content
+                "content" => $content,
             );
             
             $data[] = $post_data;
